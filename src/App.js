@@ -6,24 +6,14 @@ function App() {
   // Initialize state with the default value of the array pulled in from boxes.js
   const [squares, setSquares] = React.useState(boxes);
 
-  // This is the imperative way of writing it, next will be the declarative way of writing it.
+  //Toggle function uses setSquares to make a new array, map over each square, check its id against the one
+  // we're looking for. If it matches, make a new square there but overwrite the on property.
   function toggle(id) {
-    setSquares((prevSquares) => {
-      const newSquares = [];
-      for (let i = 0; i < prevSquares.length; i++) {
-        const currentSquare = prevSquares[i];
-        if (currentSquare.id === id) {
-          const updatedSquare = {
-            ...currentSquare,
-            on: !currentSquare.on,
-          };
-          newSquares.push(updatedSquare);
-        } else {
-          newSquares.push(currentSquare);
-        }
-      }
-      return newSquares;
-    });
+    setSquares(prevSquares => {
+      return prevSquares.map((square) => {
+        return square.id === id ? {...square, on: !square.on} : square
+      })
+    })
   }
 
   // Map over the state array and display each one as a square
